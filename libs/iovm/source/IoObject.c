@@ -2246,7 +2246,10 @@ going through the Seq wrapper.
 UArray *IoObject_rawGetUArraySlot(IoObject *self, IoObject *locals,
                                   IoMessage *m, IoSymbol *slotName) {
     IoSeq *seq = IoObject_getSlot_(self, slotName);
-    IOASSERT(ISSEQ(seq), CSTRING(slotName));
+    if (!ISSEQ(seq)) {
+        IoState_error_(IOSTATE, m, "Io Assertion '%s'", CSTRING(slotName));
+        return NULL;
+    }
     return IoSeq_rawUArray(seq);
 }
 
@@ -2258,7 +2261,10 @@ room for a future copy-on-write check.
 UArray *IoObject_rawGetMutableUArraySlot(IoObject *self, IoObject *locals,
                                          IoMessage *m, IoSymbol *slotName) {
     IoSeq *seq = IoObject_getSlot_(self, slotName);
-    IOASSERT(ISSEQ(seq), CSTRING(slotName));
+    if (!ISSEQ(seq)) {
+        IoState_error_(IOSTATE, m, "Io Assertion '%s'", CSTRING(slotName));
+        return NULL;
+    }
     return IoSeq_rawUArray(seq);
 }
 
