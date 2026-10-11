@@ -59,7 +59,7 @@
         pname = "io";
         version = "20260302";
         src = ./.;
-        nativeBuildInputs = [ pkgs.gnumake wasi-sdk ];
+        nativeBuildInputs = [ pkgs.gnumake pkgs.makeWrapper wasi-sdk ];
         buildPhase = ''
           cp -r $src/* .
           mkdir -p deps/parson
@@ -69,6 +69,9 @@
         '';
         installPhase = ''
           install -Dm755 build/bin/io_static $out/bin/io_static
+          # io_static is a WASM module; `io` runs it under wasmtime.
+          makeWrapper ${pkgs.wasmtime}/bin/wasmtime $out/bin/io \
+            --add-flags $out/bin/io_static
         '';
       };
     };
