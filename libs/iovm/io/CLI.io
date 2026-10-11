@@ -2,7 +2,10 @@ Locals removeSlot("doFile")
 
 DummyLine := File standardInput do(
     readLine := method(prompt,
-        if(prompt, prompt print)
+        # stdout may be block-buffered (pipes, WASI, non-TTY), which
+        # would leave the prompt invisible until the result flushes it.
+        # Flush explicitly so the prompt appears before we block on input.
+        if(prompt, prompt print; File standardOutput flush)
         resend
     )
 )
@@ -111,6 +114,10 @@ CLI := Object clone do(
             "<exception while displaying result>" println
             exc showStack
         )
+
+        # Flush the result too, so a piped REPL shows each
+        # answer as soon as it is computed.
+        File standardOutput flush
     )
 
     stop := method(setIsRunning(false))
