@@ -85,3 +85,7 @@ browser/io_browser.wasm
 dist
 release-notes.md
 .idea
+
+# nix-build result symlinks
+result
+result-*
