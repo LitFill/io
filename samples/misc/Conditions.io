@@ -1,8 +1,6 @@
 #!/usr/bin/env io
 
-
 a := "foobar"
-
 
 writeln("test1: ",
 	if(a == "foobar", "OK", "FAILED")
@@ -21,7 +19,6 @@ if( a == "foobar" ) then(
 	r = "FAILED"
 )
 writeln("test3: ", r)
-
 
 r := "FAILED"
 if( a == "A" ) then (

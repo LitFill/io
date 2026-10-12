@@ -18,14 +18,14 @@ exampleReturn := method(
 	b
 )
 
-writeln("break:    ", 
+writeln("break:    ",
 	if (exampleBreak == "01234", "OK", "FAILED")
 )
 
-writeln("continue: ", 
+writeln("continue: ",
 	if (exampleContinue == "01234678910", "OK", "FAILED")
 )
 
-writeln("return:   ", 
+writeln("return:   ",
 	if (exampleReturn == "01234", "OK", "FAILED")
 )

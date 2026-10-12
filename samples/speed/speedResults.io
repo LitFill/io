@@ -1,7 +1,5 @@
 #!/usr/bin/env io
 
-
-
 write("""
 <html>
 <head>
@@ -10,7 +8,6 @@ write("""
 <body>
 <ul>
 """)
-
 
 template := """
 <table cellpadding=3 cellspacing=0 border=0>
@@ -31,21 +28,20 @@ template := """
 """
 //<td><font color=#f2f2f2>@time@</td>
 
-
 slotNames := list(
-	"localAccesses", 
-	"localSets",  
-	"slotAccesses", 
-	"slotSets", 
-	"blockActivations", 
+	"localAccesses",
+	"localSets",
+	"slotAccesses",
+	"slotSets",
+	"blockActivations",
 	"instantiations")
-	
+
 SpeedTestResult := Object clone do(
     name ::= ""
     color ::= "#888888"
     fontColor ::= "#aaaaaa"
 
-    showBarFor := method(slotName, scale, 
+    showBarFor := method(slotName, scale,
 	value := self getSlot(slotName)
 	t := template asBuffer
 	t replaceSeq("@name@", name)
@@ -65,7 +61,7 @@ Python := SpeedTestResult clone setName("Python")
 Ruby   := SpeedTestResult clone setName("Ruby")
 languages := list(Io, Python, Ruby)
 
-doFile(Path with(System launchPath, "SpeedResults")) 
+doFile(Path with(System launchPath, "SpeedResults"))
 
 write("<br>Values are in millions of operations per second, so larger values are better.")
 
@@ -87,11 +83,7 @@ languages foreach(language,
 
 write("</ul>")
 
-
-
 write("</ul>")
 
-
 //System system("machine")
-
 

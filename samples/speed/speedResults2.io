@@ -1,13 +1,12 @@
 #!/usr/bin/env io
 
-
 template := """
 <table cellpadding=3 cellspacing=0 border=0>
 <tr>
 
 <td bgcolor=#888888 width=70>
 <font color=white face="helvetica, arial, sans">
-@name@ 
+@name@
 </td>
 
 <td bgcolor=@color@ width=@length@>
@@ -19,7 +18,6 @@ template := """
 </table>
 """
 
-
 Io := Object clone
 Python := Object clone
 
@@ -29,7 +27,7 @@ doString(s)
 
 slotNames := list("localAccesses", "localSets",  "slotAccesses", "slotSets", "blockActivations", "instantiations")
 
-show := method(name, value, color, fontColor, 
+show := method(name, value, color, fontColor,
 	t := template asBuffer
 	t replace("@name@", name)
 	t replace("@time@", value asString(0, 1) )
@@ -46,5 +44,4 @@ slotNames foreach(slot,
 	show("Python", Python getSlot(slot), "#888888", "#aaaaaa")
 	write("</td></tr></table>\n")
 )
-
 

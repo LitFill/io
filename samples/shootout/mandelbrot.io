@@ -5,7 +5,6 @@
 
    Contributed by Ian Osgood, Steve Dekorte */
 
-
 Vector := Sequence clone setItemType("float32") setEncoding("number")
 
 MandelbrotSet := Object clone do(
@@ -68,7 +67,7 @@ MandelbrotSet := Object clone do(
             /* if (dim%8!=0, ) */
         )
     )
-    
+
 	printSet := method(
         writeln("P4\n", dim, " ", dim)
         out := File standardOutput

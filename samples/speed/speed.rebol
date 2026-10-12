@@ -11,19 +11,19 @@ Tester: make object! [
     results: make block! []
 
     foo: func [][1]
-    
+
     t1: none
     x: none
 
     as-seconds: func[t][t/second + (t/minute * 60) + (t/hour * 3600)]
-        
+
     beginTimer: does [t1: now/time/precise]
-    
+
     endTimer: func [s /local mps][
         mps: 1 / (as-seconds now/time/precise - t1)
         print ["Rebol" s ":=" mps]
     ]
-    
+
     testSlot: func[][
         beginTimer
         loop oneMillion / 8 [
@@ -32,7 +32,7 @@ Tester: make object! [
         ]
         endTimer "slotAccesses      "
     ]
-    
+
     testSetSlot: func[][
         beginTimer
         loop oneMillion / 8 [
@@ -41,7 +41,7 @@ Tester: make object! [
         ]
         endTimer "slotSets          "
     ]
-    
+
     testBlock: does [
         beginTimer
         loop oneMillion / 8 [
@@ -50,7 +50,7 @@ Tester: make object! [
         ]
         endTimer "blockActivations  "
     ]
-    
+
     testInstantiations: does [
         beginTimer
         loop oneMillion / 8 [
@@ -59,7 +59,7 @@ Tester: make object! [
         ]
         endTimer "instantiations    "
     ]
-    
+
     testLocals: func[/local v][
         beginTimer
         v: 1
@@ -69,7 +69,7 @@ Tester: make object! [
         ]
         endTimer "localAccesses     "
     ]
-    
+
     testSetLocals: func[/local v][
         beginTimer
         v: "1"
@@ -79,7 +79,7 @@ Tester: make object! [
         ]
         endTimer "localSets         "
     ]
-    
+
     test: does [
         print newline
         testLocals
