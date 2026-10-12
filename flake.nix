@@ -5,7 +5,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
-  outputs = { self, nixpkgs }:
+  outputs =
+    { self, nixpkgs }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -25,7 +26,10 @@
         };
         sourceRoot = "wasi-sdk-34.0-x86_64-linux";
         nativeBuildInputs = [ pkgs.autoPatchelfHook ];
-        buildInputs = [ pkgs.stdenv.cc.cc.lib pkgs.libtinfo ];
+        buildInputs = [
+          pkgs.stdenv.cc.cc.lib
+          pkgs.libtinfo
+        ];
         dontConfigure = true;
         dontBuild = true;
         installPhase = ''
@@ -40,7 +44,8 @@
         url = "https://github.com/kgabis/parson/archive/ec53fb6528b45811df9db0db22cab96a94a96a11.tar.gz";
         hash = "sha256-nKVbGVOaAZ3YYjRUOpZb5FM75gCo0lOdAEYyKIjfSkE=";
       };
-    in {
+    in
+    {
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = [
           pkgs.gcc
@@ -59,7 +64,11 @@
         pname = "io";
         version = "20260302";
         src = ./.;
-        nativeBuildInputs = [ pkgs.gnumake pkgs.makeWrapper wasi-sdk ];
+        nativeBuildInputs = [
+          pkgs.gnumake
+          pkgs.makeWrapper
+          wasi-sdk
+        ];
         buildPhase = ''
           cp -r $src/* .
           mkdir -p deps/parson
@@ -70,8 +79,11 @@
         installPhase = ''
           install -Dm755 build/bin/io_static $out/bin/io_static
           # io_static is a WASM module; `io` runs it under wasmtime.
+          # --dir=. preopens the cwd (read-write) so scripts can use File/doFile.
+          # It must precede the module path: wasmtime passes anything after it to the module argv.
           makeWrapper ${pkgs.wasmtime}/bin/wasmtime $out/bin/io \
-            --add-flags $out/bin/io_static
+          --add-flags "--dir=." \
+          --add-flags $out/bin/io_static
         '';
       };
     };
